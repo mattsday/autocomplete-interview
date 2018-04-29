@@ -1,0 +1,12 @@
+autocomplete:
+  bucket-name: mday-autocomplete
+  file-name: autocomplete.json
+  subscription-name: autocomplete
+management:
+  endpoints:
+    web:
+      base-path: /_ah
+    jmx:
+      domain: /_ah
+  
+ 

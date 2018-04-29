@@ -1,0 +1,17 @@
+{"properties": [
+  {
+    "name": "autocomplete.bucket-name",
+    "type": "java.lang.String",
+    "description": "A description for 'autocomplete.bucket-name'"
+  },
+  {
+    "name": "autocomplete.file-name",
+    "type": "java.lang.String",
+    "description": "A description for 'autocomplete.file-name'"
+  },
+  {
+    "name": "autocomplete.subscription-name",
+    "type": "java.lang.String",
+    "description": "A description for 'autocomplete.subscription-name'"
+  }
+]}

@@ -1,0 +1,10 @@
+management:
+  endpoints:
+    web:
+      base-path: /_ah
+    jmx:
+      domain: /_ah
+autocomplete:
+  bucket-name: mday-autocomplete
+  file-name: products.json
+  service: https://autocomplete-dot-graceful-cider-171617.appspot.com

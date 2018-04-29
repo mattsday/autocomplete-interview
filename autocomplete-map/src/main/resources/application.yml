@@ -1,0 +1,12 @@
+autocomplete:
+  bucket-name: mday-autocomplete
+  product-list: products.json
+  promotions-list: promotions.json
+  destination-file: autocomplete.json
+  subscription-name: autocomplete-map
+management:
+  endpoints:
+    web:
+      base-path: /_ah
+    jmx:
+      domain: /_ah
