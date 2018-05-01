@@ -1,6 +1,7 @@
 package uk.co.msday.job.autocomplete.config;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -33,7 +34,7 @@ public class AutocompleteMap {
 	public void update() throws IOException {
 		ObjectMapper mapper = new ObjectMapper();
 		db = mapper.readValue(storage.readAllBytes(config.getBucketName(), config.getFileName()),
-				new TypeReference<Map<String, List<String>>>() {
+				new TypeReference<HashMap<String, List<String>>>() {
 				});
 	}
 
