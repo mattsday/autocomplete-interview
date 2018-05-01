@@ -13,3 +13,26 @@ To get up and running customise each app's `src/main/resources/application.yml` 
 mvn clean package appengine:deploy -DskipTests
 ```
 
+```
+pushd autocomplete;
+(
+	mvn clean package -DskipTests
+	mvn install dockerfile:build
+	docker push mattsday/autocomplete
+)&
+popd
+pushd autocomplete-map
+(
+	mvn clean package -DskipTests
+	mvn install dockerfile:build
+	docker push mattsday/autocomplete-map
+)&
+popd
+pushd presentation
+(
+	mvn clean package -DskipTests
+	mvn install dockerfile:build
+	docker push mattsday/presentation
+)&
+popd
+```

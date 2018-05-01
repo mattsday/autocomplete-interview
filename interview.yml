@@ -1,0 +1,127 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: load-balancer
+spec:
+  rules:
+  - host: www.demo.msday.co.uk
+    http:
+      paths:
+      - backend:
+          serviceName: presentation
+          servicePort: 80
+  - host: autocomplete.demo.msday.co.uk
+    http:
+      paths:
+      - backend:
+          serviceName: autocomplete
+          servicePort: 80
+  - host: autocomplete-map.demo.msday.co.uk
+    http:
+      paths:
+      - backend:
+          serviceName: autocomplete-map
+          servicePort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: autocomplete
+  name: autocomplete
+spec:
+  ports:
+    - port: 80
+      targetPort: 8080
+  selector:
+    app: autocomplete
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: autocomplete
+spec:
+  selector:
+    matchLabels:
+      app: autocomplete
+  template:
+    metadata:
+      labels:
+        app: autocomplete
+    spec:
+      containers:
+      - name: autocomplete
+        image: mattsday/autocomplete
+        ports:
+        - containerPort: 8080
+        resources:
+          requests:
+            memory: 2Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: autocomplete-map
+  name: autocomplete-map
+spec:
+  ports:
+    - port: 80
+      targetPort: 8080
+  selector:
+    app: autocomplete-map
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: autocomplete-map
+spec:
+  selector:
+    matchLabels:
+      app: autocomplete-map
+  template:
+    metadata:
+      labels:
+        app: autocomplete-map
+    spec:
+      containers:
+      - name: autocomplete-map
+        image: mattsday/autocomplete-map
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: presentation
+  name: presentation
+spec:
+  ports:
+    - port: 80
+      targetPort: 8080
+  selector:
+    app: presentation
+  type: NodePort
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: presentation
+spec:
+  selector:
+    matchLabels:
+      app: presentation
+  template:
+    metadata:
+      labels:
+        app: presentation
+    spec:
+      containers:
+      - name: presentation
+        image: mattsday/presentation
+        ports:
+        - containerPort: 8080
+

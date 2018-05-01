@@ -1,6 +1,8 @@
 /target/
 !.mvn/wrapper/maven-wrapper.jar
 
+account.json
+
 .DS_Store
 
 ### STS ###
