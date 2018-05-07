@@ -16,22 +16,19 @@ mvn clean package appengine:deploy -DskipTests
 ```
 pushd autocomplete;
 (
-	mvn clean package -DskipTests
-	mvn install dockerfile:build
+	mvn dockerfile:build -DskipTests
 	docker push mattsday/autocomplete
 )&
 popd
 pushd autocomplete-map
 (
-	mvn clean package -DskipTests
-	mvn install dockerfile:build
+	mvn dockerfile:build -DskipTests
 	docker push mattsday/autocomplete-map
 )&
 popd
 pushd presentation
 (
-	mvn clean package -DskipTests
-	mvn install dockerfile:build
+	mvn dockerfile:build -DskipTests
 	docker push mattsday/presentation
 )&
 popd
