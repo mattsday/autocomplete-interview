@@ -33,9 +33,6 @@ spec:
         resources:
           requests:
             memory: 2Gi
-        env:
-        - name: GOOGLE_APPLICATION_CREDENTIALS
-          value: /account.json
 ---
 apiVersion: v1
 kind: Service
@@ -69,9 +66,6 @@ spec:
         image: mattsday/autocomplete-map:latest
         ports:
         - containerPort: 8080
-        env:
-        - name: GOOGLE_APPLICATION_CREDENTIALS
-          value: /account.json
 ---
 apiVersion: v1
 kind: Service
@@ -105,7 +99,4 @@ spec:
         image: mattsday/presentation:latest
         ports:
         - containerPort: 8080
-        env:
-        - name: GOOGLE_APPLICATION_CREDENTIALS
-          value: /account.json
 
