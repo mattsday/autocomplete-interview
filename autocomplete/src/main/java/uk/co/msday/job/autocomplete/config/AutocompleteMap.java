@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -16,10 +18,12 @@ import lombok.NonNull;
 
 @Configuration
 public class AutocompleteMap {
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@NonNull
 	private Storage storage;
 
+	@NonNull
 	private FileStorageConfig config;
 
 	@Getter
@@ -32,10 +36,12 @@ public class AutocompleteMap {
 	}
 
 	public void update() throws IOException {
+		log.info("Updating autocomplete map");
 		ObjectMapper mapper = new ObjectMapper();
 		db = mapper.readValue(storage.readAllBytes(config.getBucketName(), config.getFileName()),
 				new TypeReference<HashMap<String, List<String>>>() {
 				});
+		log.info("Map updated - " + db.size() + " keys");
 	}
 
 }

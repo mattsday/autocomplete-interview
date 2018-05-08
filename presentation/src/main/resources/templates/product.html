@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
-<title>Single Product</title>
+<title th:text="${product.name}">Single Product</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="OneTech shop project">
@@ -108,7 +108,7 @@
 											id="search">
 											<input class="header_search_input typeahead" type="search"
 												placeholder="Search for a product..."
-												th:value="${product.name}" name="q">
+												th:value="${product.name}" name="q" id="searchBox">
 											<button type="submit" class="header_search_button trans_300"
 												value="Submit">
 												<img src="/images/search.png" alt="">

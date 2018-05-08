@@ -56,7 +56,7 @@ public class GenerateMapService {
 	}
 
 	public SortedMap<String, List<String>> updateMap() {
-		log.info("Updating map");
+		log.info("Updating prefixes");
 		SortedMap<String, List<String>> pointerMap = new TreeMap<>();
 
 		List<Product> products = getProductList();
@@ -121,6 +121,8 @@ public class GenerateMapService {
 			}
 		}
 
+		log.info("Prefix list updated - " + pointerMap.size() + " keys");
+
 		log.info("Uploading to cloud store");
 
 		BlobId blobId = BlobId.of(config.getBucketName(), config.getDestinationFile());
@@ -131,7 +133,7 @@ public class GenerateMapService {
 		} catch (JsonProcessingException e) {
 			throw new RuntimeException("Can't write to Google Cloud: " + e);
 		}
-		log.info("Done");
+		log.info("Done uploading prefixes");
 
 		return pointerMap;
 	}

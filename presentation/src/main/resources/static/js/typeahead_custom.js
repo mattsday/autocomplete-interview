@@ -37,3 +37,6 @@ var pending = [];
 jQuery('#remote').on('typeahead:selected', function(e, datum) {
 	$("#search").submit();
 });
+$(document).ready(function() {
+	$("#searchBox").focus();
+});

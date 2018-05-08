@@ -61,7 +61,7 @@ public class GooglePubSubConfig {
 			if ((event != null) && (message.getHeaders().get("eventType").equals("OBJECT_FINALIZE"))) {
 				if ((event.getName().equals(config.getProductList()))
 						|| event.getName().equals(config.getPromotionsList())) {
-					log.info(event.getName() + " updated - rebuilding database");
+					log.info(event.getName() + " updated - rebuilding prefix list");
 					mapService.updateMap();
 				}
 			}
