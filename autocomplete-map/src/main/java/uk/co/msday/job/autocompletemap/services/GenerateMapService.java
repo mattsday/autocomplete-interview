@@ -10,16 +10,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.cloud.storage.BlobId;
-import com.google.cloud.storage.BlobInfo;
 import com.google.cloud.storage.Storage;
 
 import lombok.AllArgsConstructor;
 import uk.co.msday.job.autocompletemap.config.FileStorageConfig;
+import uk.co.msday.job.autocompletemap.model.AutocompleteEntry;
 import uk.co.msday.job.autocompletemap.model.Product;
+import uk.co.msday.job.autocompletemap.repo.AutocompleteRedisRepo;
 
 @AllArgsConstructor
 @Service
@@ -28,6 +27,7 @@ public class GenerateMapService {
 
 	private Storage storage;
 	private FileStorageConfig config;
+	private AutocompleteRedisRepo repo;
 
 	private List<Product> getProductList() {
 		ObjectMapper mapper = new ObjectMapper();
@@ -39,6 +39,7 @@ public class GenerateMapService {
 		} catch (Exception e) {
 			throw new RuntimeException("Cannot read file from storage: " + e);
 		}
+
 		return products;
 	}
 
@@ -50,7 +51,7 @@ public class GenerateMapService {
 					new TypeReference<List<String>>() {
 					});
 		} catch (Exception e) {
-			throw new RuntimeException("Cannot read file from storage");
+			throw new RuntimeException("Cannot read file from storage " + e);
 		}
 		return products;
 	}
@@ -123,17 +124,24 @@ public class GenerateMapService {
 
 		log.info("Prefix list updated - " + pointerMap.size() + " keys");
 
-		log.info("Uploading to cloud store");
+		log.info("Adding to Redis");
 
-		BlobId blobId = BlobId.of(config.getBucketName(), config.getDestinationFile());
-		BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType("text/plain").build();
-		ObjectMapper mapper = new ObjectMapper();
-		try {
-			storage.create(blobInfo, mapper.writeValueAsBytes(pointerMap));
-		} catch (JsonProcessingException e) {
-			throw new RuntimeException("Can't write to Google Cloud: " + e);
+		for (String prefix : pointerMap.keySet()) {
+			AutocompleteEntry e = new AutocompleteEntry();
+			e.setId(prefix);
+			e.setProducts(pointerMap.get(prefix));
+			repo.save(e);
 		}
-		log.info("Done uploading prefixes");
+
+		/*
+		 * BlobId blobId = BlobId.of(config.getBucketName(),
+		 * config.getDestinationFile()); BlobInfo blobInfo =
+		 * BlobInfo.newBuilder(blobId).setContentType("text/plain").build();
+		 * ObjectMapper mapper = new ObjectMapper(); try { storage.create(blobInfo,
+		 * mapper.writeValueAsBytes(pointerMap)); } catch (JsonProcessingException e) {
+		 * throw new RuntimeException("Can't write to Google Cloud: " + e); }
+		 * log.info("Done uploading prefixes");
+		 */
 
 		return pointerMap;
 	}

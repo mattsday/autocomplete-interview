@@ -1,0 +1,5 @@
+---
+applications:
+- name: presentation-keep
+  buildpack: java_buildpack_offline
+  path: target/presentation-0.0.1-SNAPSHOT.jar

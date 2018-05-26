@@ -1,0 +1,7 @@
+---
+applications:
+- name: autocomplete-keep
+  services:
+    - autocomplete-keep
+  buildpack: java_buildpack_offline
+  path: target/autocomplete-0.0.1-SNAPSHOT.jar
