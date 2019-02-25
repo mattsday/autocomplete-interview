@@ -38,6 +38,9 @@ public class AutocompleteMap {
 	public void update() throws IOException {
 		log.info("Updating autocomplete map");
 		ObjectMapper mapper = new ObjectMapper();
+		// Null existing DB and hint GC
+		db = null;
+		System.gc();
 		db = mapper.readValue(storage.readAllBytes(config.getBucketName(), config.getFileName()),
 				new TypeReference<HashMap<String, List<String>>>() {
 				});
