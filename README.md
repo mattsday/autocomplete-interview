@@ -1,6 +1,8 @@
 # Autocomplete Solution
 This includes example code enough to run an autocompletion example on GKE.
 
+I don't believe this is asked any more by candidates, so I've made it public. It's not best practise or good code, I'd re-write this if I were to do it again.
+
 It is primarily written in Spring Boot and comprises of three microservices:
 
 1. **Autocomplete Map Generator** - `autocomplete-map/` - generates autocomplete mappings and stores them in Google Cloud Storage - triggers on a pub/sub notification from Cloud Storage
